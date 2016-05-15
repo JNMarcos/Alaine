@@ -7,9 +7,9 @@ package desenvolvimento;
  * @author JN
  *
  */
-public class AlinhamentoGlobal extends Alinhamento {
+public class AlinhamentoSemiglobal1 extends Alinhamento {
 
-	public AlinhamentoGlobal(Dados dados) {
+	public AlinhamentoSemiglobal1(Dados dados) {
 		super(dados);
 	}
 
@@ -17,23 +17,17 @@ public class AlinhamentoGlobal extends Alinhamento {
 	public void inicializarMatriz() {
 		matriz[0][0] = 0;
 		for (int i = 1; i < getDados().getnLinhas(); i++){
-			matriz[i][0] = i * getDados().getSistemaPontuacao().get("gap");
-			//tira uma posição pois no ArraYlist começa a se contar por zero
-			// não como pelo cálculo
+			matriz[i][0] = 0;
 			getVetorCaminho().set(calcularPosicaoMatriz(i, 0) - 1, 'V');
 		}
 
 		for (int j = 1; j < getDados().getnColunas(); j++){
-			matriz[0][j] = j * getDados().getSistemaPontuacao().get("gap");
-			//tira uma posição pois no ArraYlist começa a se contar por zero
-			// não como pelo cálculo
+			matriz[0][j] = 0;
 			getVetorCaminho().set(calcularPosicaoMatriz(0, j) - 1, 'H');
 		}
-
 	}
 
-	@Override
-	public int calcularMaximo(int horizontal, int vertical, int diagonal,  
+	public int calcularMaximo(int horizontal, int vertical, int diagonal, 
 			int posicaoArrayList) {
 		int maximo;
 		//precedência D>H>V
@@ -41,13 +35,13 @@ public class AlinhamentoGlobal extends Alinhamento {
 		if ((horizontal >= vertical) && (horizontal > diagonal)){
 			maximo = horizontal;
 			//adiciona de onde veio o máximo
-			getVetorCaminho().set(posicaoArrayList,'H');
+			getVetorCaminho().set(posicaoArrayList, 'H');
 		} else if (vertical > diagonal){
 			maximo = vertical;
-			getVetorCaminho().set(posicaoArrayList,'V');
+			getVetorCaminho().set(posicaoArrayList, 'V');
 		} else{
 			maximo = diagonal;
-			getVetorCaminho().set(posicaoArrayList,'D');
+			getVetorCaminho().set(posicaoArrayList, 'D');
 		}
 		System.out.println(getVetorCaminho().get(posicaoArrayList));
 		return maximo;
@@ -83,7 +77,7 @@ public class AlinhamentoGlobal extends Alinhamento {
 	}
 
 	@Override
-	public void construirCaminho() {
+	public void construirCaminho(){
 		//indica a direção que deve seguir para encontrar o melhor alinhamento
 		char direcao;
 		// dá a última posição da matriz
@@ -100,4 +94,3 @@ public class AlinhamentoGlobal extends Alinhamento {
 		}
 	}
 }
-

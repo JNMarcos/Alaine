@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 import desenvolvimento.Alinhamento;
 import desenvolvimento.AlinhamentoGlobal;
-import desenvolvimento.AlinhamentoSemiglobal;
+import desenvolvimento.AlinhamentoSemiglobal1;
 import desenvolvimento.Dados;
-import desenvolvimento.AlinhamentoLocal;
+import desenvolvimento.AlinhamentoLocal1;
 
 public class Teste {
 	public static void main(String[] argumentos){
@@ -54,7 +54,7 @@ public class Teste {
 
 			//todos os dados foram definidos, podemos instanciar um classe Dados
 			dados = new Dados(seqA, seqB, match, mismatch, gap);
-
+			
 			//laço mesmosDados
 			do{
 				//o usuário escolhe um dos alinhamento disponíveis
@@ -68,13 +68,16 @@ public class Teste {
 				//faz a diferenciação do algoritmo
 				switch(escolha){
 				case '1':
+					System.out.println("Alinhamento Global");
 					alaine = new AlinhamentoGlobal(dados);
 					break;
 				case '2':
-					alaine = new AlinhamentoSemiglobal(dados);
+					alaine = new AlinhamentoSemiglobal1(dados);
+					System.out.println("Alinhamento Semiglobal");
 					break;
 				case '3':
-					alaine = new AlinhamentoLocal(dados);
+					alaine = new AlinhamentoLocal1(dados);
+					System.out.println("Alinhamento Local");
 					break;
 				case '4':
 					isUsarMesmosDados = false;
@@ -100,6 +103,12 @@ public class Teste {
 				//não é para se esquivar das perguntas se não selecionou sair
 				//fez o alinhamento. quer fazer outro?
 				if (isEsquivarPerguntas == false){
+					alaine.inicializarMatriz();
+					alaine.preencherMatriz();
+					alaine.exibirMatriz();
+					alaine.construirCaminho();
+					alaine.exibirAlinhamento();
+					
 					System.out.println("Você deseja fazer um novo alinhamento? ");
 					System.out.println("1. Sim");
 					System.out.println("2. Não");
