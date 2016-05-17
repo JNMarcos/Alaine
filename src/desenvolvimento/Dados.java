@@ -12,8 +12,8 @@ import java.util.Hashtable;
 public class Dados {
 	private int nLinhas;
 	private int nColunas;
-	private String sequenciaA; //matriz de cima
-	private String sequenciaB; //matriz lateral
+	private String sequenciaA; //seq de cima
+	private String sequenciaB; //seq lateral
 	
 	protected Hashtable<String, Integer> sistemaPontuacao;
 
@@ -32,7 +32,8 @@ public class Dados {
 	}
 
 	public void setnLinhas(int nLinhas) {
-		this.nLinhas = nLinhas;
+		this.nLinhas = nLinhas + 1; //adição do espaço vazio
+		// ex. se for atg, a linha será -atg
 	}
 
 	public int getnColunas() {
@@ -40,7 +41,8 @@ public class Dados {
 	}
 
 	public void setnColunas(int nColunas) {
-		this.nColunas = nColunas;
+		this.nColunas = nColunas + 1;//adição do espaço vazio
+		// ex. se for atg, a coluna será -atg
 	}
 
 	public String getSequenciaA() {
@@ -48,7 +50,9 @@ public class Dados {
 	}
 
 	public void setSequenciaA(String sequenciaA) {
-		this.sequenciaA = sequenciaA;
+		// trim() = remove espaços em branco ao fim da string
+		// toUpperCase() = põe a string para maiúscula
+		this.sequenciaA = sequenciaA.trim().toUpperCase();
 	}
 
 	public String getSequenciaB() {
@@ -56,7 +60,7 @@ public class Dados {
 	}
 
 	public void setSequenciaB(String sequenciaB) {
-		this.sequenciaB = sequenciaB;
+		this.sequenciaB = sequenciaB.trim().toUpperCase();
 	}
 
 	public Hashtable<String, Integer> getSistemaPontuacao() {
@@ -64,10 +68,8 @@ public class Dados {
 	}
 
 	public void setSistemaPontuacao(int match, int mismatch, int gap) {
-		if (match != 0 && mismatch != 0 && gap != 0){
 		this.sistemaPontuacao.put("match", match);
 		this.sistemaPontuacao.put("mismatch", mismatch);
 		this.sistemaPontuacao.put("gap", gap);
-		}
 	}
 }
