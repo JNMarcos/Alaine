@@ -7,22 +7,24 @@ package desenvolvimento;
  * @author JN
  *
  */
-public class AlinhamentoSemiglobal1 extends Alinhamento {
+public class AlinhamentoSemiglobal extends Alinhamento {
 
-	public AlinhamentoSemiglobal1(Dados dados) {
+	public AlinhamentoSemiglobal(Dados dados) {
 		super(dados);
 	}
 
 	@Override
 	public void inicializarMatriz() {
-		matriz[0][0] = 0;
+		matriz[0][0] = 0; // - com - = 0
 		for (int i = 1; i < getDados().getnLinhas(); i++){
-			matriz[i][0] = 0;
-			getVetorCaminho().set(calcularPosicaoMatriz(i, 0) - 1, 'V');
+			matriz[i][0] = 0; //insere 0 na célula da matriz na primeira linha
+			//põe no vetorCaminho que o valor vem da vertical
+			getVetorCaminho().set(calcularPosicaoMatriz(i, 0) - 1, 'V'); 
 		}
 
 		for (int j = 1; j < getDados().getnColunas(); j++){
-			matriz[0][j] = 0;
+			matriz[0][j] = 0; //insere 0 na célula da matriz na primeira coluna
+			//põe no vetorCaminho que o valor vem da horizontal
 			getVetorCaminho().set(calcularPosicaoMatriz(0, j) - 1, 'H');
 		}
 	}
@@ -43,7 +45,6 @@ public class AlinhamentoSemiglobal1 extends Alinhamento {
 			maximo = diagonal;
 			getVetorCaminho().set(posicaoArrayList, 'D');
 		}
-		System.out.println(getVetorCaminho().get(posicaoArrayList));
 		return maximo;
 	}
 
@@ -92,5 +93,10 @@ public class AlinhamentoSemiglobal1 extends Alinhamento {
 			direcao = getVetorCaminho().get(posMatriz - 1);
 			construirAlinhamento(direcao);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "Alinhamento Semiglobal";
 	}
 }

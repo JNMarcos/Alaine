@@ -20,6 +20,9 @@ public abstract class Alinhamento {
 	//sequências após o alinhamento
 	private String seqAAlinhamento;
 	private String seqBAlinhamento;
+	
+	//vetorAlinhamento = vetor em String  que deve seguir para obter melhor alinhamento
+	private String vetorAlinhamento;
 
 	//posição atual da célula que está vendo
 	private int posX;
@@ -30,8 +33,10 @@ public abstract class Alinhamento {
 	//assim como a matriz e o sistema de pontuação
 	public Alinhamento (Dados dados){
 		this.setDados(dados);
+		//atribui inicialmente vazio às strings
 		this.setSeqAAlinhamento("");
 		this.setSeqBAlinhamento("");
+		this.setVetorAlinhamento("");
 		this.inicializarArrayList();
 		this.matriz = new int[this.getDados().getnLinhas()][this.getDados().getnColunas()];
 
@@ -55,6 +60,14 @@ public abstract class Alinhamento {
 
 	public void setSeqBAlinhamento(String seqBAlinhamento) {
 		this.seqBAlinhamento = seqBAlinhamento;
+	}
+
+	public String getVetorAlinhamento() {
+		return vetorAlinhamento;
+	}
+
+	public void setVetorAlinhamento(String vetorAlinhamento) {
+		this.vetorAlinhamento = vetorAlinhamento;
 	}
 
 	public int getPosX() {
@@ -84,10 +97,7 @@ public abstract class Alinhamento {
 	public void inicializarArrayList(){
 		int linha = this.getDados().getnLinhas();
 		int coluna = this.getDados().getnColunas();
-		//EXCLUIR A LINHA ABAIXO
-		System.out.println(linha*coluna);
-		this.vetorCaminho = 
-				new ArrayList<Character>(linha*coluna);
+		this.vetorCaminho = new ArrayList<Character>(linha*coluna);
 		for (int k = 0; k < linha; k++){
 			for (int l = 0; l < coluna; l++){
 				vetorCaminho.add('D');// por padrão vai para a diagonal
@@ -144,7 +154,7 @@ public abstract class Alinhamento {
 		//caracteres que se adicionarão a seqAAlinhamento e seqBAlinhamento
 		char caractereSeqA = ' ';
 		char caractereSeqB = ' ';
-
+		this.setVetorAlinhamento(getVetorAlinhamento() + " " + direcao);
 		if (direcao == 'D'){//é para prosseguir o alinhamento indo para a diagonal
 			caractereSeqA = this.getDados().getSequenciaA().charAt(this.getPosY() - 1);
 			caractereSeqB = this.getDados().getSequenciaB().charAt(this.getPosX() - 1);
@@ -190,11 +200,27 @@ public abstract class Alinhamento {
 			System.out.println();
 		}
 	}
-
-	public void exibirAlinhamento(){
+	
+	public void exibirResultado(){
+		System.out.println("\n\n\n\n\n\n");
+		System.out.println(this.toString());
+		System.out.println("sequência A: " + getDados().getSequenciaA());
+		System.out.println("sequência B: " + getDados().getSequenciaB());
 		System.out.println();
-		System.out.println("sequência A: " + getSeqAAlinhamento());
-		System.out.println("sequência B: " + getSeqBAlinhamento());
+		System.out.println("match: " + getDados().getSistemaPontuacao().get("match")
+				+ "\tmismatch: " + getDados().getSistemaPontuacao().get("mismatch")
+				+ "\t     gap: " + getDados().getSistemaPontuacao().get("gap"));
+		System.out.println();
+		System.out.println("Matriz de " + this.toString());
+		exibirMatriz();
+		System.out.println();
+		System.out.println("tamanho da matriz: "+ getDados().getnLinhas() + " x " + 
+				getDados().getnColunas());
+		System.out.println();
+		System.out.println("vetor alinhamento: " + getVetorAlinhamento());
+		System.out.println();
+		System.out.println("sequência A após o " + this.toString() + ": " + getSeqAAlinhamento());
+		System.out.println("sequência B após o " +  this.toString() + ": " + getSeqBAlinhamento());
 		System.out.println();
 	}
 }

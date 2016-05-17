@@ -4,18 +4,18 @@ package desenvolvimento;
  * @author JN
  *
  */
-public class AlinhamentoLocal1 extends Alinhamento{
-
-	//salva a posição na matriz do maior escore
-	private int posX;
-	private int posY;
+public class AlinhamentoLocal extends Alinhamento{
+	
+	//posX e posY serão mais usados aqui, pois serão chamados a cada iteração da matriz
+	//para guardar a posição da célula da matriz que tem o maior escore, por
+	//onde começará o alinhamento, já que é local
 
 	//salva o maior escore para comparação
 	private int maiorEscore;
 
 	//pos. do ArrayList que tem a direção de onde ir do maior escore
 	private int posArrayList;
-	public AlinhamentoLocal1(Dados dados) {
+	public AlinhamentoLocal(Dados dados) {
 		super(dados);
 		//seta dados padrões, maiorEscore = 0, e posição de inicio = 0 e pos. de fim = 0
 		//pos. array = 0
@@ -23,22 +23,6 @@ public class AlinhamentoLocal1 extends Alinhamento{
 		this.setPosX(0);
 		this.setPosY(0);
 		this.setPosArrayList(0);
-	}
-
-	public int getPosX() {
-		return posX;
-	}
-
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-
-	public int getPosY() {
-		return posY;
-	}
-
-	public void setPosY(int posY) {
-		this.posY = posY;
 	}
 
 	public int getMaiorEscore() {
@@ -59,20 +43,20 @@ public class AlinhamentoLocal1 extends Alinhamento{
 
 	@Override
 	public void inicializarMatriz() {
-		matriz[0][0] = 0;
+		matriz[0][0] = 0; // - com - = 0
 		for (int i = 1; i < getDados().getnLinhas(); i++){
-			matriz[i][0] = 0;
+			matriz[i][0] = 0; // insere zero nas células da primeira linha
+			// seta que o valor da célula veio da vertical
 			getVetorCaminho().set(calcularPosicaoMatriz(i, 0) - 1, 'V');
 		}
 
 		for (int j = 1; j < getDados().getnColunas(); j++){
-			matriz[0][j] = 0;
+			matriz[0][j] = 0; // insere zero nas células da primeira coluna
+			// seta que o valor da célula veio da horizontal
 			getVetorCaminho().set(calcularPosicaoMatriz(0, j) - 1, 'H');
 		}
 	}
 
-	//TÁ ERRADO VER AÍ
-	// É DIFERENTE O MODO DE CALCULAR
 	public int calcularMaximo(int horizontal, int vertical, int diagonal, 
 			int posicaoArrayList) {
 		int maximo;
@@ -90,15 +74,12 @@ public class AlinhamentoLocal1 extends Alinhamento{
 			getVetorCaminho().set(posicaoArrayList, 'D');
 		}
 		
-		System.out.println(getVetorCaminho().get(posicaoArrayList));
-
 		//se maximo < 0, pelo alinh. local, devemos zerar a célula da matriz
 		if (maximo < 0){
 			maximo = 0;
 		}
 		return maximo;
 	}
-	//FAZ ALGO
 
 	@Override
 	public void preencherMatriz(){
@@ -147,7 +128,6 @@ public class AlinhamentoLocal1 extends Alinhamento{
 				//a posX e posY é obtida pela célula com maior escore
 				// no método preencherMatriz()
 				//eposArrayList tb é assim obtido
-
 				//faça enquanto não encontra um zero
 				while (matriz[getPosX()][getPosY()] != 0){
 					//subtrai um, pois o array começa por zero
@@ -155,4 +135,8 @@ public class AlinhamentoLocal1 extends Alinhamento{
 					construirAlinhamento(direcao);
 				}
 			}
+	@Override
+	public String toString() {
+		return "Alinhamento Local";
+	}
 }

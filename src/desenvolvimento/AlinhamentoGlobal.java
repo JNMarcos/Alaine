@@ -49,7 +49,6 @@ public class AlinhamentoGlobal extends Alinhamento {
 			maximo = diagonal;
 			getVetorCaminho().set(posicaoArrayList,'D');
 		}
-		System.out.println(getVetorCaminho().get(posicaoArrayList));
 		return maximo;
 	}
 
@@ -98,6 +97,11 @@ public class AlinhamentoGlobal extends Alinhamento {
 			direcao = getVetorCaminho().get(posMatriz - 1);
 			construirAlinhamento(direcao);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Alinhamento Global";
 	}
 }
 
