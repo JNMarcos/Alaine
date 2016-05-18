@@ -24,6 +24,10 @@ public class Programa {
 		//verifica se o sistema de pontuação segue match > mismatch e mismatch > gap
 		// se for incoerente, pede para inserir novamente
 		boolean isCoerenteAPontuacao = true;
+		
+		//indica para o alinhamento semiglobal, se o maior escore será da última linha ou
+		// da última coluna
+		boolean isUltimaLinha = true;
 
 		//variável que indica qual alinhamento será realizado
 		//o usuário insere
@@ -94,7 +98,22 @@ public class Programa {
 					alaine = new AlinhamentoGlobal(dados);
 					break;
 				case '2':
-					alaine = new AlinhamentoSemiglobal(dados);
+					
+					System.out.println("\n\n\n\n\nQual tipo de alinhamento semiglobal você deseja? ");
+					System.out.println("1. Maior escore na última linha");
+					System.out.println("2. Maior escore na última coluna");
+					escolhaSecundaria = entrada.next().charAt(0);
+					System.out.println("\n\n\n\n\n\n");
+					switch (escolhaSecundaria){
+					case '1': default: //por padrão, é a última linha
+						isUltimaLinha = true;
+						break;
+					case '2':
+						isUltimaLinha = false;
+						break;
+					}
+					
+					alaine = new AlinhamentoSemiglobal(dados, isUltimaLinha);
 					break;
 				case '3':
 					alaine = new AlinhamentoLocal(dados);

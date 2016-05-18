@@ -5,7 +5,7 @@ package desenvolvimento;
  *
  */
 public class AlinhamentoLocal extends Alinhamento{
-	
+
 	//posX e posY serão mais usados aqui, pois serão chamados a cada iteração da matriz
 	//para guardar a posição da célula da matriz que tem o maior escore, por
 	//onde começará o alinhamento, já que é local
@@ -73,7 +73,7 @@ public class AlinhamentoLocal extends Alinhamento{
 			maximo = diagonal;
 			getVetorCaminho().set(posicaoArrayList, 'D');
 		}
-		
+
 		//se maximo < 0, pelo alinh. local, devemos zerar a célula da matriz
 		if (maximo < 0){
 			maximo = 0;
@@ -108,7 +108,7 @@ public class AlinhamentoLocal extends Alinhamento{
 				this.matriz[i][j] = maximo;	
 
 				//ver se é o maior escore da matriz até então
-				if (maximo > getMaiorEscore()){//é o maior escore da matriz
+				if (maximo > this.getMaiorEscore()){//é o maior escore da matriz
 					//guarda o novo máximo para fazer as novas comparações
 					this.setMaiorEscore(maximo);
 					this.setPosX(i);
@@ -124,17 +124,46 @@ public class AlinhamentoLocal extends Alinhamento{
 	@Override
 	public void construirCaminho() {
 		//indica a direção que deve seguir para encontrar o melhor alinhamento
-				char direcao;
-				//a posX e posY é obtida pela célula com maior escore
-				// no método preencherMatriz()
-				//eposArrayList tb é assim obtido
-				//faça enquanto não encontra um zero
-				while (matriz[getPosX()][getPosY()] != 0){
-					//subtrai um, pois o array começa por zero
-					direcao = getVetorCaminho().get(this.getPosArrayList());
-					construirAlinhamento(direcao);
-				}
-			}
+		char direcao;
+		//a posX e posY é obtida pela célula com maior escore
+		// no método preencherMatriz()
+		//eposArrayList tb é assim obtido
+		//faça enquanto não encontra um zero
+		while (matriz[getPosX()][getPosY()] != 0){
+			//subtrai um, pois o array começa por zero
+			direcao = getVetorCaminho().get(this.getPosArrayList());
+			construirAlinhamento(direcao);
+		}
+		ajeitarSequenciasAlinhamento(getSeqAAlinhamento(), getSeqBAlinhamento());
+	}
+	public void ajeitarSequenciasAlinhamento(String seqA, String seqB){
+		int tamanhoSeqA = seqA.length();
+		int tamanhoSeqB = seqB.length();
+		
+		//corrige a seqA pondo o restante de '-' à frente
+		for (int i = 0; i < getPosX(); i++){
+			seqA = '-' + seqA;
+		}
+		
+		//corrige a seqA pondo o restante de '-' atrás
+		//subtrai um de getnLinhas porque não faz parte da string o carcatere '-'
+		for (int i = 0; i < (getDados().getnLinhas() - 1) - (tamanhoSeqA + getPosX()); i++){
+			seqA = seqA + '-';
+		}
+		
+		//corrige a seqB pondo o restante de '-' à frente
+		for (int j = 0; j < getPosY(); j++){
+			seqB = '-' + seqB;
+		}
+		//corrige a seqB pondo o restante de '-' atrás
+		//subtrai um de getnColunas porque não faz parte da string o carcatere '-'
+		for (int j = 0; j < (getDados().getnColunas() - 1) - (tamanhoSeqB + getPosY()); j++){
+			seqB = seqB + '-';
+		}
+		
+		setSeqAAlinhamento(seqA);
+		setSeqBAlinhamento(seqB);
+	}
 	@Override
 	public String toString() {
 		return "Alinhamento Local";

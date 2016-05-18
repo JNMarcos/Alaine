@@ -9,8 +9,41 @@ package desenvolvimento;
  */
 public class AlinhamentoSemiglobal extends Alinhamento {
 
-	public AlinhamentoSemiglobal(Dados dados) {
+	private int maiorEscore;
+	private int posArrayList;
+	private boolean isUltimaLinha;
+
+	public AlinhamentoSemiglobal(Dados dados, boolean isUltimaLinha) {
 		super(dados);
+		this.setUltimaLinha(isUltimaLinha);
+		this.setMaiorEscore(0);
+		this.setPosX(0);
+		this.setPosY(0);
+		this.setPosArrayList(0);
+	}
+
+	public int getMaiorEscore() {
+		return maiorEscore;
+	}
+
+	public void setMaiorEscore(int maiorEscore) {
+		this.maiorEscore = maiorEscore;
+	}
+
+	public int getPosArrayList() {
+		return posArrayList;
+	}
+
+	public void setPosArrayList(int posArrayList) {
+		this.posArrayList = posArrayList;
+	}
+
+	public boolean isUltimaLinha() {
+		return isUltimaLinha;
+	}
+
+	public void setUltimaLinha(boolean isUltimaLinha) {
+		this.isUltimaLinha = isUltimaLinha;
 	}
 
 	@Override
@@ -72,7 +105,29 @@ public class AlinhamentoSemiglobal extends Alinhamento {
 						calcularPosicaoMatriz(i, j) - 1);
 
 				//atribui o maior valor (máximo) a posição atual da matriz
-				this.matriz[i][j] = maximo;				
+				this.matriz[i][j] = maximo;			
+
+				if (j == getDados().getnColunas() - 1 && isUltimaLinha() == false) {
+					if (maximo > this.getMaiorEscore()){
+						//guarda o novo máximo para fazer as novas comparações
+						this.setMaiorEscore(maximo);
+						this.setPosX(i);
+						this.setPosY(j);
+						//indica a de onde veio o escore da célula de maior escore no ArrayList
+						//tem que tirar um, pois o array começa por 0, não por 1 
+						this.setPosArrayList(calcularPosicaoMatriz(i, j) - 1);
+					}
+				} else	if (i == getDados().getnLinhas() - 1 && isUltimaLinha() == true){ 
+					if (maximo > this.getMaiorEscore()){
+						//guarda o novo máximo para fazer as novas comparações
+						this.setMaiorEscore(maximo);
+						this.setPosX(i);
+						this.setPosY(j);
+						//indica a de onde veio o escore da célula de maior escore no ArrayList
+						//tem que tirar um, pois o array começa por 0, não por 1 
+						this.setPosArrayList(calcularPosicaoMatriz(i, j) - 1);
+					}
+				}
 			}
 		}
 	}
@@ -83,8 +138,6 @@ public class AlinhamentoSemiglobal extends Alinhamento {
 		char direcao;
 		// dá a última posição da matriz
 		int posMatriz;
-		super.setPosX(this.getDados().getnLinhas() - 1); //obtém a última linha da matriz
-		super.setPosY(this.getDados().getnColunas() - 1); //obtém a última coluna da matriz
 
 		//faça enquanto não chega na posição (0,0) da matriz
 		while (getPosX() != 0 || getPosY() != 0){
@@ -94,7 +147,7 @@ public class AlinhamentoSemiglobal extends Alinhamento {
 			construirAlinhamento(direcao);
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Alinhamento Semiglobal";
